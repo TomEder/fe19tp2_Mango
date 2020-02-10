@@ -3,5 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App/index';
-ReactDOM.render(<App />, document.getElementById('root'));
-serviceWorker.unregister();
+import Firebase, { FirebaseContext } from './components/Firebase';
+
+ReactDOM.render(
+    <FirebaseContext.Provider value={new Firebase()}>
+
+    <App />
+    </FirebaseContext.Provider>,
+    document.getElementById('root')
+);
+
+    serviceWorker.unregister();
