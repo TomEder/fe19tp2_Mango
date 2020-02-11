@@ -1,29 +1,58 @@
 import FirebaseContext from './context';
-import Firebase from './firebase';
-export { FirebaseContext };
+// import Firebase from './firebase';
+import app from 'firebase/app';
+import 'firebase/auth'
 
-const config = {
-    apiKey: YOUR_API_KEY,
-    authDomain: YOUR_AUTH_DOMAIN,
-    databaseURL: YOUR_DATABASE_URL,
-    projectId: YOUR_PROJECT_ID,
-    storageBucket: '',
-    messagingSenderId: YOUR_MESSAGING_SENDER_ID,
+const prodConfig = {
+
+    apiKey: "AIzaSyBbghIOR3TxnoTrfIhwQm-ht-ZRHPOERpM",
+    authDomain: "fe19tp2-mango.firebaseapp.com",
+    databaseURL: "https://fe19tp2-mango.firebaseio.com",
+    projectId: "fe19tp2-mango",
+    storageBucket: "fe19tp2-mango.appspot.com",
+    messagingSenderId: "450659239563",
+    appId: "1:450659239563:web:8a09930ee04d5315f9768e",
+    measurementId: "G-Q8KBVMG7KV"
 };
 
 const devConfig = {
-    apiKey: process.env.REACT_APP_DEV_API_KEY,
-    authDomain: process.env.REACT_APP_DEV_AUTH_DOMAIN,
-    databaseURL: process.env.REACT_APP_DEV_DATABASE_URL,
-    projectId: process.env.REACT_APP_DEV_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_DEV_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_DEV_MESSAGING_SENDER_ID,
+    apiKey: "AIzaSyBbghIOR3TxnoTrfIhwQm-ht-ZRHPOERpM",
+    authDomain: "fe19tp2-mango.firebaseapp.com",
+    databaseURL: "https://fe19tp2-mango.firebaseio.com",
+    projectId: "fe19tp2-mango",
+    storageBucket: "fe19tp2-mango.appspot.com",
+    messagingSenderId: "450659239563",
+    appId: "1:450659239563:web:12476f4c1649c5d1f9768e",
+    measurementId: "G-EW1DHF0NSC"
+};
+
+// const config = process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
+const config = {
+  
 };
 
 class Firebase {
     constructor() {
-    app.initializeApp(config);
-    app.initializeApp(devConfig);
+        app.initializeApp(prodConfig);
+        //app.initializeApp(devConfig);
+
+        this.auth = app.auth();
     }
-    }
-    export default Firebase;
+    doCreateUserWithEmailAndPassword = (email, password) =>
+        this.auth.createUserWithEmailAndPassword(email, password);
+    doSignInWithEmailAndPassword = (email, password) =>
+        this.auth.signInWithEmailAndPassword(email, password);
+
+    doSignOut = () => this.auth.signOut();
+    doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+    doPasswordUpdate = password =>
+        this.auth.currentUser.updatePassword(password);
+
+}
+
+
+
+
+
+export default Firebase;
+export { FirebaseContext };
